@@ -8,3 +8,8 @@ Mini CQB adalah game tembak-menembak dua dimensi gaya top-down dengan menekankan
 
 ## High Concept
 Mini CQB memosisikan player sebagai seorang personel penyerbu untuk melumpuhkan superioritas musuh dalam ruang sempit dan tertutup, memaksa player untuk mengukur dan merencanakan setiap aksi yang hendak diambil demi mencapai misi. Alat-alat taktis seperti granat, bom asap, pistol cermin, dan lainnya tersedia untuk player. 
+
+## Unique Selling Points
+Apa ya
+
+## Platform Minimum Requirements
