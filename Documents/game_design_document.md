@@ -13,3 +13,7 @@ Mini CQB memosisikan player sebagai seorang personel penyerbu untuk melumpuhkan 
 Apa ya
 
 ## Platform Minimum Requirements
+Iso urip.
+
+## Competence Title
+${nama.game}
