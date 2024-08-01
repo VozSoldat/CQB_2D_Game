@@ -21,6 +21,9 @@ public class PlayerInputPC : MonoBehaviour
             return;
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+        bool isTiptoeing = Input.GetButton("Tiptoe");
+        // bool isTiptoeing = Input.GetKey(KeyCode.Space);
         playerMovement.movementDirection = new Vector2(horizontal, vertical);
+        playerMovement.isTiptoeing = isTiptoeing;
     }
 }
