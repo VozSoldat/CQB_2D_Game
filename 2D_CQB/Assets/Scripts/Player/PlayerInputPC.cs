@@ -25,5 +25,10 @@ public class PlayerInputPC : MonoBehaviour
         // bool isTiptoeing = Input.GetKey(KeyCode.Space);
         playerMovement.movementDirection = new Vector2(horizontal, vertical);
         playerMovement.isTiptoeing = isTiptoeing;
+
+        if (MouseLocation.Instance != null && MouseLocation.Instance.isValid)
+        {
+            Vector2 lookPoint = MouseLocation.Instance.mousePosition - playerMovement.transform.position;
+        }
     }
 }
