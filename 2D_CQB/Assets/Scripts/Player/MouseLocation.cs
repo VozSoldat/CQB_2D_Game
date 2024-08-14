@@ -1,5 +1,3 @@
-using System.Collections;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 
 public class MouseLocation : MonoBehaviour
@@ -8,31 +6,25 @@ public class MouseLocation : MonoBehaviour
     public static MouseLocation Instance;
     [HideInInspector] public Vector2 mousePosition;
     public bool isValid;
-    [SerializeField] bool a ;
-    Ray mouseRay;
-    RaycastHit2D hit2D;
-    Vector2 screenPosition;
-    [SerializeField] LayerMask whatIsGround;
-    // Start is called before the first frame update
+
     private void Awake() {
-        if(Instance == null) Instance = this;
-        else if(Instance != this) Destroy(this);
+        if (Instance == null) Instance = this;
+        else if (Instance != this) Destroy(gameObject);
     }
 
-    // Update is called once per frame
+    private void Reset() {
+        mainCamera = Camera.main;
+    }
+
     void Update()
     {
-        isValid = false;
-        screenPosition = Input.mousePosition;
-        mouseRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-        // mousePosition = hit2D.point;
+        // Get the mouse position in screen space
+        Vector2 screenPosition = Input.mousePosition;
 
-        if (Physics2D.Raycast(mouseRay.origin, mouseRay.direction, Mathf.Infinity, whatIsGround))
-        {
-            isValid = true;
-            Transform hitObjectPosition = hit2D.transform;
-        }
+        // Convert screen position to world position directly
+        mousePosition = mainCamera.ScreenToWorldPoint(screenPosition);
 
+        // Assuming the ground layer is large enough to cover the whole game view
+        isValid = true;
     }
-
 }

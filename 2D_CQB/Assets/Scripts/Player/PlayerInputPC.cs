@@ -28,7 +28,8 @@ public class PlayerInputPC : MonoBehaviour
 
         if (MouseLocation.Instance != null && MouseLocation.Instance.isValid)
         {
-            Vector2 lookPoint = MouseLocation.Instance.mousePosition - playerMovement.transform.position;
+            Vector2 lookPoint = MouseLocation.Instance.mousePosition - (Vector2)playerMovement.transform.position;
+            playerMovement.lookPoint = lookPoint;
         }
     }
 }
