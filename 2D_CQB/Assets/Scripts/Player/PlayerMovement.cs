@@ -6,62 +6,61 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [HideInInspector] public Vector2 movementDirection = Vector2.zero;
-    [HideInInspector] public Vector2 lookPoint;
     [HideInInspector] public bool isTiptoeing;
 
     public float speed = 20f;
-    float TiptoeSpeed
+    private float TiptoeSpeed
     {
         get
         {
-            return speed/5f;
+            return speed / 5f;
         }
     }
-    [SerializeField] Rigidbody2D rb;
-    
-    // Start is called before the first frame update
-    private void Reset() {
+
+    [SerializeField] private Rigidbody2D rb;
+
+    // Private field for lookPoint to ensure it's set and used correctly
+    private Vector2 lookPoint;
+
+    private void Reset()
+    {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    private void FixedUpdate() 
-{
-    if (isTiptoeing)
+    private void FixedUpdate()
     {
-        rb.MovePosition((Vector2)transform.position + movementDirection.normalized * TiptoeSpeed * Time.fixedDeltaTime);    
-    }
-    else
-    {
-        rb.MovePosition((Vector2)transform.position + movementDirection.normalized * speed * Time.fixedDeltaTime);
+        TranslationMovement();
+        RotationMovement();
     }
 
-    // Calculate the look direction vector from the player to the lookPoint
-    Vector2 lookDirection = lookPoint - rb.position;
+    public void SetLookPoint(Vector2 point)
+    {
+        lookPoint = point;
+    }
 
-    // Calculate the angle in degrees
-    float targetAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+    private void TranslationMovement()
+    {
+        // float moveSpeed = isTiptoeing ? TiptoeSpeed : speed;
+        // rb.MovePosition((Vector2)transform.position + movementDirection.normalized * moveSpeed * Time.fixedDeltaTime);
 
-    // Apply the rotation directly to face the mouse position
-    rb.MoveRotation(targetAngle);
-}
+        if (!isTiptoeing)
+        {
+            rb.MovePosition((Vector2)transform.position + movementDirection.normalized * speed * Time.fixedDeltaTime);
+        }else
+        if (isTiptoeing)
+        {
+            rb.MovePosition((Vector2)transform.position + movementDirection.normalized * TiptoeSpeed * Time.fixedDeltaTime);
+        }
+    }
 
+    private void RotationMovement()
+    {
+        // Ensure lookPoint is valid
+        if (lookPoint == Vector2.zero)
+            return;
 
-    // private void FixedUpdate() 
-    // {
-    //     if (isTiptoeing)
-    //     {
-    //         rb.MovePosition((Vector2)transform.position + movementDirection.normalized * TiptoeSpeed * Time.fixedDeltaTime);  
-    //     }
-    //     else
-    //     {
-    //         rb.MovePosition((Vector2)transform.position + movementDirection.normalized * speed * Time.fixedDeltaTime);
-    //     }
-
-    //     Vector2 lookDirection = lookPoint - (Vector2)transform.position;
-    //     float targetAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-    //     float angle = Mathf.LerpAngle(rb.rotation, targetAngle, 10f * Time.deltaTime);
-    //     rb.MoveRotation(angle);
-    // }
-
+        Vector2 direction = (lookPoint - (Vector2)transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        rb.MoveRotation(angle);
+    }
 }
